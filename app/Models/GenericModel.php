@@ -10,17 +10,18 @@ use CodeIgniter\Model;
 class GenericModel extends Model
 {
   protected $table;
-  protected $returnType     = 'object';
-
+  protected $returnType = 'object';
+  protected $primaryKey;
   /**
    * Construtor inicial
    *
    * @param string $table Nome da tabela
    */
-  function __construct($table)
+  function __construct($table, $primaryKey = null)
   {
     parent::__construct();
     $this->table = $table;
+    if ($primaryKey != null) $this->primaryKey = $primaryKey;
   }
   /**
    * Método utilizado para a inserção
@@ -30,9 +31,8 @@ class GenericModel extends Model
    */
   function inserir($dados)
   {
-    $db = \Config\Database::connect();
-    $db->table($this->table)->insert($dados);
-    return $db->insertID();
+    $query = $this->db->table($this->table)->insert($dados);
+    return $query;
   }
   /**
    * Método utilizado para ler todos os dados
@@ -41,8 +41,8 @@ class GenericModel extends Model
    */
   function lerTodos()
   {
-    $db = \Config\Database::connect();
-    return $db->table($this->table)->get();
+    $query = $this->db->table($this->table)->get();
+    return $query->getResult();
   }
   /**
    * Método utilizado para ler um valor com uma condição em específico
@@ -53,8 +53,8 @@ class GenericModel extends Model
    */
   function lerEspecifico($coluna, $valor)
   {
-    $db = \Config\Database::connect();
-    return $db->table($this->table)->where($coluna, $valor);
+    $query = $this->db->table($this->table)->where($coluna, $valor)->get();
+    return $query->getResult();
   }
   /**
    * Atualiza o dado
@@ -66,8 +66,7 @@ class GenericModel extends Model
    */
   function atualizar($dados, $coluna, $valor)
   {
-    $db = \Config\Database::connect();
-    return $db->table($this->table)->set($dados)->where($coluna, $valor)->update();
+    return $this->db->table($this->table)->set($dados)->where($coluna, $valor)->update();
   }
   /**
    * Deleta os valores
@@ -77,7 +76,6 @@ class GenericModel extends Model
    */
   function deletar($colunaValor)
   {
-    $db = \Config\Database::connect();
-    return $db->table($this->table)->delete($colunaValor);
+    return $this->db->table($this->table)->delete($colunaValor);
   }
 }
