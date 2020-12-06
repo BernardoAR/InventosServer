@@ -8,7 +8,7 @@ class Produto extends GenericController
 	{
 		$produtosModel = new \App\Models\ProdutoModel();
 		$dados = $produtosModel->pegaProdutos();
-		$this->decodeJson(array('UsuarioModel'), $dados);
+		$this->decodeJson(array('usuario'), $dados);
 		echo json_encode($dados);
 	}
 	//--------------------------------------------------------------------
