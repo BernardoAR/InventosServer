@@ -6,7 +6,10 @@ class Produto extends GenericController
 {
 	public function pegaProdutos()
 	{
-		$produtoModel = model('\App\Models\ProdutoModel');
+		$produtosModel = new \App\Models\ProdutoModel();
+		$dados = $produtosModel->pegaProdutos();
+		$this->decodeJson(array('UsuarioModel'), $dados);
+		echo json_encode($dados);
 	}
 	//--------------------------------------------------------------------
 

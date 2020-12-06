@@ -14,7 +14,9 @@ class Usuario extends GenericController
 	{
 		$uid = $this->request->getPost('uid');
 		$usuarioModel = new \App\Models\UsuarioModel();
-		echo json_encode($usuarioModel->pegaUsuarioUid($uid));
+		$dados = $usuarioModel->pegaUsuarioUid($uid);
+		$this->decodeJson(array('TipoUsuarioModel'), $dados);
+		echo json_encode($dados);
 	}
 
 	//--------------------------------------------------------------------
