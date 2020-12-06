@@ -7,10 +7,10 @@ use App\Models\GenericModel;
 /**
  * Método com funcionalidades de Usário
  */
-class UsuarioModel extends GenericModel
+class ProdutoModel extends GenericModel
 {
   function __construct()
   {
-    parent::__construct('tbUsuario');
+    parent::__construct('tbProduto');
   }
 }

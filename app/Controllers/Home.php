@@ -1,12 +1,7 @@
-<?php namespace App\Controllers;
+<?php
 
-class Home extends BaseController
+namespace App\Controllers;
+
+class Home extends GenericController
 {
-	public function index()
-	{
-		return view('welcome_message');
-	}
-
-	//--------------------------------------------------------------------
-
 }
