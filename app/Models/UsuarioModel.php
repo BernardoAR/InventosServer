@@ -19,6 +19,12 @@ class UsuarioModel extends GenericModel
     $query = $this->db->table($this->table)->select($select)->join('tbTipoUsuario', 'tbTipoUsuario.id = tbUsuario.tipoUsuario')->get();
     return $query->getResult();
   }
+  /**
+   * Método utilizado para pegar o usuário que possui um UID
+   *
+   * @param string $uid
+   * @return void
+   */
   function pegaUsuarioUid($uid)
   {
     $select = "uid, nome, JSON_OBJECT('id', id, 'tipo', tipo) AS TipoUsuarioModel";
