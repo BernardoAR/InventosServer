@@ -15,9 +15,10 @@ class ProdutoModel extends GenericModel
   }
   function pegaProdutos()
   {
-    $select = "{$this->table}.*,  JSON_OBJECT('uid', tbUsuario.uid,'nome', tbUsuario.nome,'tipoUsuario', JSON_OBJECT('id', tbTipoUsuario.id, 'tipo', tbTipoUsuario.tipo)) AS usuario";
+    $select = "{$this->table}.*,  JSON_OBJECT('uid', tbUsuario.uid,'nome', tbUsuario.nome,'tipoUsuario', JSON_OBJECT('id', tbTipoUsuario.id, 'tipo', tbTipoUsuario.tipo)) AS usuario, JSON_OBJECT('id', tbProdutoTipo.id, 'titulo', tbProdutoTipo.titulo) AS produtoTipo";
     $query = $this->db->table($this->table)->select($select)
       ->join('tbUsuario', 'tbUsuario.uid = tbProduto.usuario')
+      ->join('tbProdutoTipo', 'tbProdutoTipo.id = tbProduto.tipoProduto')
       ->join('tbTipoUsuario', 'tbTipoUsuario.id = tbUsuario.tipoUsuario')->get();
     return $query->getResult();
   }
