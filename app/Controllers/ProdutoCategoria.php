@@ -6,9 +6,8 @@ class ProdutoCategoria extends GenericController
 {
 	public function index()
 	{
-		echo '?';
 	}
-
-	//--------------------------------------------------------------------
-
+	public function insereProdutoCategoria()
+	{
+	}
 }

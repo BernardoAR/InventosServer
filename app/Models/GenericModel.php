@@ -32,7 +32,7 @@ class GenericModel extends Model
   function inserir($dados)
   {
     $query = $this->db->table($this->table)->insert($dados);
-    return $query;
+    return  $query->connID->insert_id;
   }
   /**
    * Método utilizado para ler todos os dados
@@ -51,9 +51,13 @@ class GenericModel extends Model
    * @param string $valor valor a se verificar
    * @return object
    */
-  function lerEspecifico($coluna, $valor)
+  function lerEspecifico($where)
   {
-    $query = $this->db->table($this->table)->where($coluna, $valor)->get();
+    $builder = $this->db->table($this->table);
+    foreach ($where as $key => $value) {
+      $builder->where($key, $value);
+    }
+    $query =  $builder->get();
     return $query->getResult();
   }
   /**

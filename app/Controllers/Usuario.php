@@ -30,7 +30,6 @@ class Usuario extends GenericController
 		// Pega os dados;
 		$dados = $this->request->getJSON(true);
 		$usuarioModel = new \App\Models\UsuarioModel();
-
 		// Verifica se já existe um usuário com aquele uid, se tiver, apenas atualiza os dados
 		if (empty($this->pegaUsuarioUid($dados['uid']))) {
 			$usuarioModel->inserir($dados);
