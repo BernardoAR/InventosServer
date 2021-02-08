@@ -60,13 +60,16 @@ class GenericModel extends Model
    * Atualiza o dado
    *
    * @param array $dados dados a se atualizar
-   * @param string $coluna coluna para se verificar
-   * @param string $valor valor a se verificar
+   * @param array $where array('coluna' => 'valor',...)
    * @return bool
    */
-  function atualizar($dados, $coluna, $valor)
+  function atualizar($dados, $where)
   {
-    return $this->db->table($this->table)->set($dados)->where($coluna, $valor)->update();
+    $query = $this->db->table($this->table)->set($dados);
+    foreach ($where as $key => $value) {
+      $query->where($key, $value);
+    }
+    return $query->update();
   }
   /**
    * Deleta os valores

@@ -12,11 +12,13 @@ class Usuario extends GenericController
 	 */
 	public function pegaUsuarioUid($uid = null)
 	{
-		$uid = $uid ?? $this->request->getPost('uid');
+		// Pega os dados;
+		$request = $this->request->getJSON(true);
+		$uid = $uid ?? $request['uid'];
 		$usuarioModel = new \App\Models\UsuarioModel();
 		$dados = $usuarioModel->pegaUsuarioUid($uid);
-		$this->decodeJson(array('TipoUsuarioModel'), $dados);
-		return $dados;
+		$this->decodeJson(array('tipoUsuario'), $dados);
+		echo json_encode($dados);
 	}
 	/**
 	 * Método utilizado para inserir o usuário
@@ -33,7 +35,7 @@ class Usuario extends GenericController
 		if (empty($this->pegaUsuarioUid($dados['uid']))) {
 			$usuarioModel->inserir($dados);
 		} else {
-			$usuarioModel->atualizar($dados, 'uid', $dados['uid']);
+			$usuarioModel->atualizar($dados, array('uid' => $dados['uid']));
 		}
 	}
 	/**
@@ -46,6 +48,6 @@ class Usuario extends GenericController
 		// Pega os dados;
 		$dados = $this->request->getPost();
 		$usuarioModel = new \App\Models\UsuarioModel();
-		$usuarioModel->atualizar($dados, 'uid', $dados['uid']);
+		$usuarioModel->atualizar($dados, array('uid' => $dados['uid']));
 	}
 }

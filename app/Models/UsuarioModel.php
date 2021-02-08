@@ -15,7 +15,7 @@ class UsuarioModel extends GenericModel
   }
   function pegaUsuarios()
   {
-    $select = "uid, nome, JSON_OBJECT(id, tipo) AS TipoUsuarioModel";
+    $select = "uid, nome, JSON_OBJECT(id, tipo) AS tipoUsuario";
     $query = $this->db->table($this->table)->select($select)->join('tbTipoUsuario', 'tbTipoUsuario.id = tbUsuario.tipoUsuario')->get();
     return $query->getResult();
   }
@@ -27,7 +27,7 @@ class UsuarioModel extends GenericModel
    */
   function pegaUsuarioUid($uid)
   {
-    $select = "uid, nome, JSON_OBJECT('id', id, 'tipo', tipo) AS TipoUsuarioModel";
+    $select = "uid, nome, JSON_OBJECT('id', id, 'tipo', tipo) AS tipoUsuario";
     $query = $this->db->table($this->table)->select($select)->join('tbTipoUsuario', 'tbTipoUsuario.id = tbUsuario.tipoUsuario')->where('tbUsuario.uid', $uid)->get();
     return $query->getResult();
   }
