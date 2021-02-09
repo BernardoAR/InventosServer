@@ -6,9 +6,12 @@ class Produto extends GenericController
 {
 	public function pegaProdutos()
 	{
+		$request = $this->request->getJSON(true);
+		$nome = empty($request['nome']) ? '' : $request['nome'];
 		$produtosModel = new \App\Models\ProdutoModel();
-		$dados = $produtosModel->pegaProdutos();
+		$dados = $produtosModel->pegaProdutos($nome);
 		$this->decodeJson(array('usuario'), $dados);
+		$this->decodeJson(array('produtoTipo'), $dados);
 		echo json_encode($dados);
 	}
 	/**

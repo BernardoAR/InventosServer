@@ -83,6 +83,7 @@ class GenericModel extends Model
    */
   function deletar($colunaValor)
   {
-    return $this->db->table($this->table)->delete($colunaValor);
+    $this->db->table($this->table)->delete($colunaValor);
+    return $this->db->getLastQuery();
   }
 }

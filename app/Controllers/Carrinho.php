@@ -12,6 +12,7 @@ class Carrinho extends GenericController
 		$carrinhoModel = new \App\Models\CarrinhoModel();
 		$dados = $carrinhoModel->pegaProdutosCarrinho($request['usuario']);
 		$this->decodeJson(array('usuario'), $dados);
+		$this->decodeJson(array('produto'), $dados);
 		echo json_encode($dados);
 	}
 
@@ -26,6 +27,17 @@ class Carrinho extends GenericController
 		echo json_encode($dados);
 	}
 	/**
+	 * Método utilizado para deletar um produto do carrinho
+	 *
+	 * @return void
+	 */
+	public function removeProdutosCarrinho()
+	{
+		$request = $this->request->getJSON(true);
+		$carrinhoModel = new \App\Models\CarrinhoModel();
+		$carrinhoModel->deletar(array('produto' => $request['carrinho']['produto'], 'usuario' => $request['usuario']));
+	}
+	/**
 	 * Método utilizado para inserir ou atualizar os produtos no carrinho
 	 *
 	 * @return void
@@ -35,7 +47,7 @@ class Carrinho extends GenericController
 		$request = $this->request->getJSON(true);
 		$carrinhoModel = new \App\Models\CarrinhoModel();
 		// Verifica se já existe um produto cadastrado
-		if (empty($carrinhoModel->verificaProdutoUsuarioCarrinho($request['carrinho']['produto'], $request['usuario']))) {
+		if (empty($carrinhoModel->lerEspecifico(array('produto' => $request['carrinho']['produto'], 'usuario' => $request['usuario'])))) {
 			$carrinhoModel->inserir($request['carrinho']);
 		} else {
 			$carrinhoModel->atualizar($request['carrinho'], array('usuario' => $request['usuario'], 'produto' => $request['carrinho']['produto']));
